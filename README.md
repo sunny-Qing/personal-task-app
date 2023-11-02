@@ -1,7 +1,11 @@
 # personal tasksapp
-Project for course <Tillämpad Cloud Computing och Big Data>
+Project for course <Tillämpad Cloud Computing och Big Data>.
 
-# How to deploy:
-In terminal, run:
-    cd manifests
-    ./kube.sh 
+Kubernetes files locate in /manifests directory. 
+
+# How to deploy kubernetes:
+
+**In terminal, run:**
+
+*cd manifests
+*./kube.sh 
