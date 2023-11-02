@@ -1,4 +1,3 @@
-# Apply only the parts matching the label for the configmap and the textStore
 kubectl apply -f mongo-pv.yaml
 kubectl apply -f mongo.yaml
 kubectl apply -f profileapp.yaml
@@ -18,5 +17,5 @@ export taskip=$( kubectl get services/tasksapp-svc --template='{{.spec.clusterIP
 kubectl get configmap/task-config -o yaml | sed -r "s/NOTSET/$taskip/" | kubectl apply -f -
 
 
-# Finally, start the qfapp
-kubectl apply -f gateway.yaml # change to gatway and chreate new for task app
+# Finally, start the gateway
+kubectl apply -f gateway.yaml
