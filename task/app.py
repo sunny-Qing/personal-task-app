@@ -1,0 +1,53 @@
+from flask import Flask, request, jsonify
+from flask_pymongo import PyMongo
+from bson.objectid import ObjectId
+
+app = Flask(__name__)
+app.config["MONGO_URI"] = "mongodb://mongo:27017/dev"
+app.config['JSONIFY_PRETTYPRINT_REGULAR'] = True
+mongo = PyMongo(app)
+db = mongo.db
+
+@app.route("/tasks")
+def get_all_tasks():
+    tasks = db.task.find()
+    data = []
+    for task in tasks:
+        item = {
+            "id": str(task["_id"]),
+            "task": task["task"]
+        }
+        data.append(item)
+    return jsonify(
+        data = data
+    )
+
+
+@app.route("/task/add", methods=["POST"])
+def create_task():
+    data = request.get_json(force=True)
+    db.task.insert_one({"task": data["task"]})
+    message="Task saved successfully!"
+    return message
+
+@app.route("/task/<id>", methods=["PUT"])
+def update_task(id):
+    data = request.get_json(force=True)["task"]
+    response = db.task.update_one({"_id": ObjectId(id)}, {"$set": {"task": data}})
+    if response.matched_count:
+        message = "Task updated successfully!"
+    else:
+        message = "No Task found!"
+    return message
+
+@app.route("/task/<id>", methods=["DELETE"])
+def delete_task(id):
+    response = db.task.delete_one({"_id": ObjectId(id)})
+    if response.deleted_count:
+        message = "Task deleted successfully!"
+    else:
+        message = "No Task found!"
+    return message
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5002)

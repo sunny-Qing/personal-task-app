@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: profileapp
+  labels:
+    app: profileapp
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: profileapp
+  template:
+    metadata:
+      labels:
+        app: profileapp
+    spec:
+      containers:
+        - name: profileapp
+          image: sunnylala/profileapp:latest
+          ports:
+            - containerPort: 5000
+          imagePullPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: profileapp-svc
+spec:
+  selector:
+    app: profileapp
+  ports:
+    - port: 8080
+      targetPort: 5000
