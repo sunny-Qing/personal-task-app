@@ -7,5 +7,5 @@ Kubernetes files locate in /manifests directory.
 
 **In terminal, run:**
 
-*cd manifests
-*./kube.sh 
+* cd manifests
+* ./kube.sh 
