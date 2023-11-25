@@ -32,5 +32,4 @@ spec:
   ports:
     - port: 8082
       targetPort: 5002
-  type: LoadBalancer
 
